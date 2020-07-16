@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,6 +18,8 @@ namespace DutchTreat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //MvcOptions mvcOptions = new MvcOptions();
+            //mvcOptions.EnableEndpointRouting = false;
         }
 
 
@@ -36,17 +39,24 @@ namespace DutchTreat
             }
 
             app.UseStaticFiles();
+            
             app.UseNodeModules();
 
             app.UseRouting();
 
             app.UseEndpoints(cfg =>
             {
-                cfg.MapControllerRoute( "Fallback",
+                cfg.MapControllerRoute("Fallback",
                    "{controller}/{action}/{id?}",
                    new { controller = "App", action = "Index" });
             });
 
+            //app.UseMvc(cfg =>
+            //{
+            //    cfg.MapRoute("Default",
+            //       "{controller}/{action}/{id?}",
+            //       new { controller = "App", action = "Index" });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
